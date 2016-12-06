@@ -1,26 +1,27 @@
-var app = angular.module('starter.controllers', []);
+var app = angular.module('app.controllers', []);
 
-app.controller('BookingsCtrl', function($scope, $ionicModal, $http) {
-  $scope.longitude = 0;
-  $scope.latitude = 0;
-  $scope.sync_notification = '';
+const API_URL = "http://localhost:3000";
 
-  $scope.submit = function() {
-    $http.post('http://localhost:3000/bookings', {longitude: $scope.longitude, latitude: $scope.latitude})
-      .then(function (response) {
-        $scope.sync_notification = response.data.message;
-        $scope.modal.show();
-      });
-  };
+app.controller('newOrderCtrl', ['$scope', '$stateParams',
+  function($scope, $stateParams) {
 
-  $ionicModal.fromTemplateUrl('templates/bookings/sync-notification.html', {
-    scope: $scope
-  }).then(function(modal) {
-    $scope.modal = modal;
-  });
 
-  $scope.closeModal = function() {
-    $scope.sync_notification = '';
-    $scope.modal.hide();
-  };
-});
+  }])
+
+  .controller('currentOrderCtrl', ['$scope', '$stateParams',
+    function($scope, $stateParams) {
+
+
+    }])
+
+  .controller('homeCtrl', ['$scope', '$stateParams',
+    function($scope, $stateParams) {
+
+
+    }])
+
+  .controller('orderHistoryCtrl', ['$scope', '$stateParams',
+    function($scope, $stateParams) {
+
+
+    }]);
