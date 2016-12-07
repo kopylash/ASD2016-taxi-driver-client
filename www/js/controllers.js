@@ -21,8 +21,24 @@ app.controller('homeCtrl', function($scope, $stateParams, $location, PusherServi
 
 })
 
-  .controller('newOrderCtrl', function($scope, $stateParams, OrderNotificationService) {
+  .controller('newOrderCtrl', function($scope, $stateParams, $http, OrderNotificationService, AuthService) {
     $scope.order = OrderNotificationService.get();
+
+    $scope.accept = function() {
+      console.log('accept');
+      $http.post([API_URL, "orders", "accept"].join("/"), {
+        accept_details: {
+          order_id: $scope.order.id,
+          driver_id: AuthService.get().id
+        }
+      }).then(function(res) {
+
+      });
+    };
+
+    $scope.decline = function() {
+      OrderNotificationService.set({});
+    }
   })
 
   .controller('currentOrderCtrl', function($scope, $stateParams) {
