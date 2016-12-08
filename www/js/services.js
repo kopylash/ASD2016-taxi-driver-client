@@ -6,4 +6,39 @@ angular.module('app.services', [])
 
   .service('BlankService', [function() {
 
-  }]);
+  }])
+
+  .service('PusherService', function() {
+    var pusher = new Pusher('49d687ce69d0caf32b29', {
+      encrypted: true
+    });
+    return pusher;
+  })
+
+  .service('AuthService', function() {
+    var authData = {
+      id: null
+    };
+
+    return {
+      get: function() {
+        return authData;
+      },
+      set: function(data) {
+        authData = data;
+      }
+    };
+  })
+
+  .service('OrderNotificationService', function() {
+    var order = {};
+
+    return {
+      get: function() {
+        return order;
+      },
+      set: function(data) {
+        order = data;
+      }
+    };
+  });
