@@ -2,7 +2,9 @@ var app = angular.module('app.controllers', []);
 
 const API_URL = "http://localhost:3000";
 
-app.controller('homeCtrl', function($scope, $stateParams, $location, PusherService, AuthService, OrderNotificationService) {
+var LOCATION_UPDATE_INTERVAL = 5*60*1000;
+
+app.controller('homeCtrl', function($scope, $stateParams, $location, PusherService, AuthService, OrderNotificationService, $http) {
   AuthService.set({
     id: 1
   });
@@ -18,6 +20,24 @@ app.controller('homeCtrl', function($scope, $stateParams, $location, PusherServi
     }
 
   });
+
+  $scope.updateLocation = function() {
+    navigator.geolocation.getCurrentPosition(function(response) {
+      var driverData = {
+        driver: {
+          latitude: response.coords.latitude,
+          longitude: response.coords.longitude
+        }
+      };
+
+      $http.put([API_URL, 'drivers', AuthService.get()['id']].join('/'), driverData)
+      .then(function(response) {
+        window.setTimeout($scope.updateLocation, LOCATION_UPDATE_INTERVAL);
+      });
+    });
+  }
+
+  $scope.updateLocation();
 
 })
 
