@@ -1,9 +1,8 @@
 <ion-view title="Home" id="home" style="">
   <ion-content padding="true" class="has-header">
     <div class="card driver-background"></div>
-    <div id="newOrder-button-bar1" class="button-bar">
-      <a ui-sref="currentOrder" id="newOrder-button7" class="button button-positive  button-block">Current</a>
-      <a ui-sref="orderHistory" id="newOrder-button8" class="button button-assertive  button-block">History</a>
+    <div class="button-bar">
+      <button ng-click="toggleStatus()" class="button button-block button-calm">{{ statusChangeText }}</button>
     </div>
   </ion-content>
 </ion-view>
