@@ -23,8 +23,8 @@ app.controller('homeCtrl', function($scope, $stateParams, $location, PusherServi
 
   $scope.toggleStatus = function() {
     if ($scope.status == 'available') {
-      $scope.setStatus('busy');
-    } else if ($scope.status == 'busy') {
+      $scope.setStatus('off');
+    } else if ($scope.status == 'off') {
       $scope.setStatus('available');
     }
   };
