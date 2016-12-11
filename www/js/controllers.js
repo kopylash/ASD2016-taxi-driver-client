@@ -2,9 +2,9 @@ var app = angular.module('app.controllers', []);
 
 var API_URL = "http://localhost:3000";
 
-var LOCATION_UPDATE_INTERVAL = 5*60*1000;
+var LOCATION_UPDATE_INTERVAL = 5 * 60 * 1000;
 
-app.controller('homeCtrl', function($scope, $stateParams, $location, PusherService, AuthService, OrderNotificationService, $http) {
+app.controller('homeCtrl', function($scope, $stateParams, $location, PusherService, AuthService, OrderService, $http) {
   AuthService.set({
     id: 1
   });
@@ -14,7 +14,7 @@ app.controller('homeCtrl', function($scope, $stateParams, $location, PusherServi
     var id = AuthService.get().id;
     if (notification.id_list && notification.id_list.indexOf(id) >= 0) {
       console.log(notification);
-      OrderNotificationService.set(notification.order);
+      OrderService.set(notification.order);
       $location.path('/new');
       $scope.$apply();
     }
@@ -37,13 +37,13 @@ app.controller('homeCtrl', function($scope, $stateParams, $location, PusherServi
     };
 
     $http.put([API_URL, 'drivers', AuthService.get()['id']].join('/'), driverData)
-    .then(function(response) {
-      $scope.status = response.data.driver.status;
+      .then(function(response) {
+        $scope.status = response.data.driver.status;
 
-      $scope.statusChangeText = 'Set status to "' + ($scope.status == 'off'?'available':'off') + '"';
+        $scope.statusChangeText = 'Set status to "' + ($scope.status == 'off' ? 'available' : 'off') + '"';
 
-      $scope.statusButtonClass = $scope.status == 'available' ? 'button-assertive':'button-positive';
-    });
+        $scope.statusButtonClass = $scope.status == 'available' ? 'button-assertive' : 'button-positive';
+      });
   };
 
   $scope.setStatus('available');
@@ -57,20 +57,19 @@ app.controller('homeCtrl', function($scope, $stateParams, $location, PusherServi
         }
       };
 
-      $http.put([API_URL, 'drivers', AuthService.get()['id']].join('/'), driverData)
-      .then(function(response) {
+      $http.put([API_URL, 'drivers', AuthService.get()['id']].join('/'), driverData).then(function(response) {
         window.setTimeout($scope.updateLocation, LOCATION_UPDATE_INTERVAL);
       });
     });
-  }
+  };
 
   $scope.updateLocation();
 
 
 })
 
-  .controller('newOrderCtrl', function($scope, $stateParams, $http, OrderNotificationService, AuthService) {
-    $scope.order = OrderNotificationService.get();
+  .controller('newOrderCtrl', function($scope, $stateParams, $http, OrderService, AuthService) {
+    $scope.order = OrderService.get();
 
     $scope.accept = function() {
       console.log('accept');
@@ -85,16 +84,19 @@ app.controller('homeCtrl', function($scope, $stateParams, $location, PusherServi
     };
 
     $scope.decline = function() {
-      OrderNotificationService.set({});
-    }
+      OrderService.set({});
+    };
   })
 
-  .controller('currentOrderCtrl', function($scope, $stateParams) {
+  .controller('currentOrderCtrl', function($scope, $stateParams, $http, $location, OrderService) {
+    $scope.order = OrderService.get();
 
-
-  })
-
-  .controller('orderHistoryCtrl', function($scope, $stateParams) {
-
+    $scope.completeOrder = function() {
+      $http.post([API_URL, 'orders', $scope.order.id, 'complete'].join('/')).then(function(res) {
+        console.log('order completed', res);
+        OrderService.set({});
+        $location.path('/home');
+      });
+    };
 
   });
