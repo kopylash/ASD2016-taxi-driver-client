@@ -23,8 +23,8 @@ app.controller('homeCtrl', function($scope, $stateParams, $location, PusherServi
 
   $scope.toggleStatus = function() {
     if ($scope.status == 'available') {
-      $scope.setStatus('busy');
-    } else if ($scope.status == 'busy') {
+      $scope.setStatus('off');
+    } else if ($scope.status == 'off') {
       $scope.setStatus('available');
     }
   };
@@ -40,7 +40,7 @@ app.controller('homeCtrl', function($scope, $stateParams, $location, PusherServi
     .then(function(response) {
       $scope.status = response.data.driver.status;
 
-      $scope.statusChangeText = 'Set status to "' + ($scope.status == 'busy'?'available':'busy') + '"';
+      $scope.statusChangeText = 'Set status to "' + ($scope.status == 'off'?'available':'off') + '"';
 
       $scope.statusButtonClass = $scope.status == 'available' ? 'button-assertive':'button-positive';
     });
