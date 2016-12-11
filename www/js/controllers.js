@@ -1,6 +1,6 @@
 var app = angular.module('app.controllers', []);
 
-const API_URL = "http://localhost:3000";
+var API_URL = "http://localhost:3000";
 
 var LOCATION_UPDATE_INTERVAL = 5*60*1000;
 
