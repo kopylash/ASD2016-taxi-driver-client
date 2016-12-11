@@ -26,12 +26,6 @@ angular.module('app.routes', [])
     controller: 'currentOrderCtrl'
   })
 
-  .state('orderHistory', {
-    url: '/history',
-    templateUrl: 'templates/orderHistory.html',
-    controller: 'orderHistoryCtrl'
-  });
-
 $urlRouterProvider.otherwise('/home')
 
 
