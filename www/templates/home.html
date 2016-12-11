@@ -2,7 +2,7 @@
   <ion-content padding="true" class="has-header">
     <div class="card driver-background"></div>
     <div class="button-bar">
-      <button ng-click="toggleStatus()" class="button button-block button-calm">{{ statusChangeText }}</button>
+      <button ng-click="toggleStatus()" class="button button-block" ng-class="statusButtonClass">{{ statusChangeText }}</button>
     </div>
   </ion-content>
 </ion-view>

@@ -41,6 +41,8 @@ app.controller('homeCtrl', function($scope, $stateParams, $location, PusherServi
       $scope.status = response.data.driver.status;
 
       $scope.statusChangeText = 'Set status to "' + ($scope.status == 'busy'?'available':'busy') + '"';
+
+      $scope.statusButtonClass = $scope.status == 'available' ? 'button-assertive':'button-positive';
     });
   };
 
