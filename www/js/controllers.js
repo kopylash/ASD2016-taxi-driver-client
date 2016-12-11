@@ -1,8 +1,10 @@
 var app = angular.module('app.controllers', []);
 
-const API_URL = "http://localhost:3000";
+var API_URL = "http://localhost:3000";
 
-app.controller('homeCtrl', function($scope, $stateParams, $location, PusherService, AuthService, OrderNotificationService) {
+var LOCATION_UPDATE_INTERVAL = 5*60*1000;
+
+app.controller('homeCtrl', function($scope, $stateParams, $location, PusherService, AuthService, OrderNotificationService, $http) {
   AuthService.set({
     id: 1
   });
@@ -18,6 +20,52 @@ app.controller('homeCtrl', function($scope, $stateParams, $location, PusherServi
     }
 
   });
+
+  $scope.toggleStatus = function() {
+    if ($scope.status == 'available') {
+      $scope.setStatus('busy');
+    } else if ($scope.status == 'busy') {
+      $scope.setStatus('available');
+    }
+  };
+
+  $scope.setStatus = function(newStatus) {
+    var driverData = {
+      driver: {
+        status: newStatus
+      }
+    };
+
+    $http.put([API_URL, 'drivers', AuthService.get()['id']].join('/'), driverData)
+    .then(function(response) {
+      $scope.status = response.data.driver.status;
+
+      $scope.statusChangeText = 'Set status to "' + ($scope.status == 'busy'?'available':'busy') + '"';
+
+      $scope.statusButtonClass = $scope.status == 'available' ? 'button-assertive':'button-positive';
+    });
+  };
+
+  $scope.setStatus('available');
+
+  $scope.updateLocation = function() {
+    navigator.geolocation.getCurrentPosition(function(response) {
+      var driverData = {
+        driver: {
+          latitude: response.coords.latitude,
+          longitude: response.coords.longitude
+        }
+      };
+
+      $http.put([API_URL, 'drivers', AuthService.get()['id']].join('/'), driverData)
+      .then(function(response) {
+        window.setTimeout($scope.updateLocation, LOCATION_UPDATE_INTERVAL);
+      });
+    });
+  }
+
+  $scope.updateLocation();
+
 
 })
 
