@@ -38,6 +38,7 @@ angular.module('app.services', [])
         return order;
       },
       set: function(data) {
+        console.log("set", data);
         order = data;
       }
     };

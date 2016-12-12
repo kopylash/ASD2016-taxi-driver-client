@@ -1,6 +1,7 @@
 var app = angular.module('app.controllers', []);
 
-var API_URL = "http://localhost:3000";
+var API_URL = "http://taxi13.herokuapp.com";
+// var API_URL = "http://localhost:3000";
 
 var LOCATION_UPDATE_INTERVAL = 5 * 60 * 1000;
 
@@ -13,7 +14,7 @@ app.controller('homeCtrl', function($scope, $stateParams, $location, PusherServi
   channel.bind('new_order', function(notification) {
     var id = AuthService.get().id;
     if (notification.id_list && notification.id_list.indexOf(id) >= 0) {
-      console.log(notification);
+      console.log('order received', notification);
       OrderService.set(notification.order);
       $location.path('/new');
       $scope.$apply();
@@ -69,7 +70,11 @@ app.controller('homeCtrl', function($scope, $stateParams, $location, PusherServi
 })
 
   .controller('newOrderCtrl', function($scope, $stateParams, $http, OrderService, AuthService) {
-    $scope.order = OrderService.get();
+    $scope.$on('$ionicView.beforeEnter', function() {
+      $scope.order = OrderService.get();
+      console.log('in new order modal', $scope.order);
+    });
+
 
     $scope.accept = function() {
       console.log('accept');
@@ -89,7 +94,11 @@ app.controller('homeCtrl', function($scope, $stateParams, $location, PusherServi
   })
 
   .controller('currentOrderCtrl', function($scope, $stateParams, $http, $location, OrderService) {
-    $scope.order = OrderService.get();
+    $scope.$on('$ionicView.beforeEnter', function() {
+      $scope.order = OrderService.get();
+      console.log('in current order modal', $scope.order);
+    });
+
 
     $scope.completeOrder = function() {
       $http.post([API_URL, 'orders', $scope.order.id, 'complete'].join('/')).then(function(res) {
