@@ -6,7 +6,7 @@ var LOCATION_UPDATE_INTERVAL = 5 * 60 * 1000;
 
 app.controller('homeCtrl', function($scope, $stateParams, $location, PusherService, AuthService, OrderService, $http) {
   AuthService.set({
-    id: 1
+    id: 3
   });
 
   var channel = PusherService.subscribe('orders');
