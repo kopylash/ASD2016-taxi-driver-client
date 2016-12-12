@@ -30,7 +30,7 @@ angular.module('app.services', [])
     };
   })
 
-  .service('OrderNotificationService', function() {
+  .service('OrderService', function() {
     var order = {};
 
     return {
