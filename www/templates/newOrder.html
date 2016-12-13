@@ -1,0 +1,14 @@
+<ion-view title="New order" id="new" style="">
+  <ion-content padding="true" class="has-header">
+    <div class="list card" id="newOrder-card22">
+      <ion-item id="newOrder-list-item17" style="">{{order.pickup_address}}</ion-item>
+      <ion-item id="newOrder-list-item19" style="">{{order.dropoff_address}}</ion-item>
+      <ion-item class="item-icon-left" id="newOrder-list-item24" style="">
+        <i class="icon ion-cash"></i>{{order.price}} €</ion-item>
+    </div>
+    <div id="newOrder-button-bar1" class="button-bar">
+      <a ui-sref="currentOrder" id="newOrder-button7" class="button button-positive  button-block" ng-click="accept()">Accept</a>
+      <a ui-sref="home" id="newOrder-button8" class="button button-assertive  button-block" ng-click="decline()">Decline</a>
+    </div>
+  </ion-content>
+</ion-view>

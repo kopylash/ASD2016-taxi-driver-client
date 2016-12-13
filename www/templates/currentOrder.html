@@ -1,0 +1,15 @@
+<ion-view title="Current order" id="current" style="">
+  <ion-content padding="true" class="has-header">
+    <ion-list id="currentOrder-list4">
+      <ion-item id="currentOrder-list-item20" style="">{{order.pickup_address}}</ion-item>
+      <ion-item id="currentOrder-list-item21" style="">{{order.dropoff_address}}</ion-item>
+      <ion-item class="item-icon-left" id="currentOrder-list-item22" ui-sref="orderARide" style="">
+        <i class="icon ion-android-person"></i>{{order.client_name}}</ion-item>
+      <ion-item class="item-icon-left" id="currentOrder-list-item23" style="">
+        <i class="icon ion-ios-telephone"></i>{{order.phone}}</ion-item>
+      <ion-item class="item-icon-left" id="currentOrder-list-item25" style="">
+        <i class="icon ion-cash"></i>{{order.price}} €</ion-item>
+    </ion-list>
+    <a ui-sref="home" id="currentOrder-button10" class="button button-positive button-block" ng-click="completeOrder()">Finish</a>
+  </ion-content>
+</ion-view>

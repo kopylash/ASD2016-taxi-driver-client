@@ -1,1 +1,8 @@
 /* Empty. Add your own CSS if you like */
+.driver-background {
+  width: 100%;
+  min-height: 250px;
+  background-image: url('../img/driver.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
